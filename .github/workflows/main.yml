@@ -1,9 +1,14 @@
-name: Build
-on: workflow_dispatch
+name: Build SH1MMER
+on:
+  workflow_dispatch:
+    inputs:
+      board:
+        default: 'kefka'
 jobs:
   build:
-    runs-on: ubnutu-latest
+    runs-on: ubuntu-latest
     steps:
-      - run: echo "kefka"
+      - run: echo "Building ${{ github.event.inputs.board }}"
+
 
 
