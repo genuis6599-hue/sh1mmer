@@ -3,12 +3,25 @@ on:
   workflow_dispatch:
     inputs:
       board:
+        description: 'Board name'
+        required: true
         default: 'kefka'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Building ${{ github.event.inputs.board }}"
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        run: |
+          chmod +x build.sh
+          sed -i 's/\r$//' build.sh
+          bash build.sh ${{ github.event.inputs.board }}
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: shim-file
+          path: "*.bin"
 
 
 
